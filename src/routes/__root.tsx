@@ -10,9 +10,9 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { buttonVariants } from '@/components/ui/button';
-import { User, UserRound } from 'lucide-react';
+import { UserRound } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import React from 'react';
+import React, { memo } from 'react';
 
 const navItems: { title: string; href: string; description: string }[] = [
   {
@@ -60,40 +60,45 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
 );
 ListItem.displayName = 'ListItem';
 
+const Navigation = memo(() => (
+  <div className="p-2 flex border-2 border-amber-600 gap-2">
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            New Arrivals
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+              {navItems.map(navItem => (
+                <ListItem key={navItem.title} title={navItem.title} href={navItem.href}>
+                  {navItem.description}
+                </ListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink>
+            <Link to="/about">About Us</Link>
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+    <Link to="/profile" className={buttonVariants({ variant: 'link' })}>
+      <UserRound />
+    </Link>
+  </div>
+));
+Navigation.displayName = 'Navigation';
+
 export const Route = createRootRoute({
   component: () => (
     <>
-      <div className="p-2 flex border-2 border-amber-600 gap-2">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                New Arrivals
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                  {navItems.map(navItem => (
-                    <ListItem key={navItem.title} title={navItem.title} href={navItem.href}>
-                      {navItem.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink>
-                <Link to="/about">About Us</Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-        <Link to="/profile" className={buttonVariants({ variant: 'link' })}>
-          <UserRound />
-        </Link>
-      </div>
+      <Navigation />
       <hr />
       <Outlet />
       <TanStackRouterDevtools />
