@@ -1,9 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router';
-
+import { Outlet, createFileRoute } from '@tanstack/react-router';
+import ProfileLayout from '@/components/ui/profile-layout';
 export const Route = createFileRoute('/profile')({
-  component: Profile,
+  component: ProfileLayoutComponent,
 });
 
-function Profile() {
-  return <div className="p-2">User Profile!!!</div>;
+function ProfileLayoutComponent() {
+  return (
+    <ProfileLayout>
+      <Outlet />
+    </ProfileLayout>
+  );
 }
