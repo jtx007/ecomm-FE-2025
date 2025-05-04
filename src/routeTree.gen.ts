@@ -10,13 +10,16 @@
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as ProfileImport } from './routes/profile'
-import { Route as AboutImport } from './routes/about'
-import { Route as IndexImport } from './routes/index'
-import { Route as ProfileWishlistImport } from './routes/profile/wishlist'
-import { Route as ProfileOrdersImport } from './routes/profile/orders'
-import { Route as ProfileAccountImport } from './routes/profile/account'
+import { Route as rootRoute } from './routes/__root';
+import { Route as ProfileImport } from './routes/profile';
+import { Route as NewArrivalsImport } from './routes/new-arrivals';
+import { Route as CartImport } from './routes/cart';
+import { Route as AboutImport } from './routes/about';
+import { Route as IndexImport } from './routes/index';
+import { Route as ProfileIndexImport } from './routes/profile/index';
+import { Route as ProfileWishlistImport } from './routes/profile/wishlist';
+import { Route as ProfileOrdersImport } from './routes/profile/orders';
+import { Route as ProfileAccountImport } from './routes/profile/account';
 
 // Create/Update Routes
 
@@ -24,175 +27,235 @@ const ProfileRoute = ProfileImport.update({
   id: '/profile',
   path: '/profile',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
+
+const NewArrivalsRoute = NewArrivalsImport.update({
+  id: '/new-arrivals',
+  path: '/new-arrivals',
+  getParentRoute: () => rootRoute,
+} as any);
+
+const CartRoute = CartImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRoute,
+} as any);
 
 const AboutRoute = AboutImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
-} as any)
+} as any);
+
+const ProfileIndexRoute = ProfileIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProfileRoute,
+} as any);
 
 const ProfileWishlistRoute = ProfileWishlistImport.update({
   id: '/wishlist',
   path: '/wishlist',
   getParentRoute: () => ProfileRoute,
-} as any)
+} as any);
 
 const ProfileOrdersRoute = ProfileOrdersImport.update({
   id: '/orders',
   path: '/orders',
   getParentRoute: () => ProfileRoute,
-} as any)
+} as any);
 
 const ProfileAccountRoute = ProfileAccountImport.update({
   id: '/account',
   path: '/account',
   getParentRoute: () => ProfileRoute,
-} as any)
+} as any);
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexImport;
+      parentRoute: typeof rootRoute;
+    };
     '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/about';
+      path: '/about';
+      fullPath: '/about';
+      preLoaderRoute: typeof AboutImport;
+      parentRoute: typeof rootRoute;
+    };
+    '/cart': {
+      id: '/cart';
+      path: '/cart';
+      fullPath: '/cart';
+      preLoaderRoute: typeof CartImport;
+      parentRoute: typeof rootRoute;
+    };
+    '/new-arrivals': {
+      id: '/new-arrivals';
+      path: '/new-arrivals';
+      fullPath: '/new-arrivals';
+      preLoaderRoute: typeof NewArrivalsImport;
+      parentRoute: typeof rootRoute;
+    };
     '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileImport
-      parentRoute: typeof rootRoute
-    }
+      id: '/profile';
+      path: '/profile';
+      fullPath: '/profile';
+      preLoaderRoute: typeof ProfileImport;
+      parentRoute: typeof rootRoute;
+    };
     '/profile/account': {
-      id: '/profile/account'
-      path: '/account'
-      fullPath: '/profile/account'
-      preLoaderRoute: typeof ProfileAccountImport
-      parentRoute: typeof ProfileImport
-    }
+      id: '/profile/account';
+      path: '/account';
+      fullPath: '/profile/account';
+      preLoaderRoute: typeof ProfileAccountImport;
+      parentRoute: typeof ProfileImport;
+    };
     '/profile/orders': {
-      id: '/profile/orders'
-      path: '/orders'
-      fullPath: '/profile/orders'
-      preLoaderRoute: typeof ProfileOrdersImport
-      parentRoute: typeof ProfileImport
-    }
+      id: '/profile/orders';
+      path: '/orders';
+      fullPath: '/profile/orders';
+      preLoaderRoute: typeof ProfileOrdersImport;
+      parentRoute: typeof ProfileImport;
+    };
     '/profile/wishlist': {
-      id: '/profile/wishlist'
-      path: '/wishlist'
-      fullPath: '/profile/wishlist'
-      preLoaderRoute: typeof ProfileWishlistImport
-      parentRoute: typeof ProfileImport
-    }
+      id: '/profile/wishlist';
+      path: '/wishlist';
+      fullPath: '/profile/wishlist';
+      preLoaderRoute: typeof ProfileWishlistImport;
+      parentRoute: typeof ProfileImport;
+    };
+    '/profile/': {
+      id: '/profile/';
+      path: '/';
+      fullPath: '/profile/';
+      preLoaderRoute: typeof ProfileIndexImport;
+      parentRoute: typeof ProfileImport;
+    };
   }
 }
 
 // Create and export the route tree
 
 interface ProfileRouteChildren {
-  ProfileAccountRoute: typeof ProfileAccountRoute
-  ProfileOrdersRoute: typeof ProfileOrdersRoute
-  ProfileWishlistRoute: typeof ProfileWishlistRoute
+  ProfileAccountRoute: typeof ProfileAccountRoute;
+  ProfileOrdersRoute: typeof ProfileOrdersRoute;
+  ProfileWishlistRoute: typeof ProfileWishlistRoute;
+  ProfileIndexRoute: typeof ProfileIndexRoute;
 }
 
 const ProfileRouteChildren: ProfileRouteChildren = {
   ProfileAccountRoute: ProfileAccountRoute,
   ProfileOrdersRoute: ProfileOrdersRoute,
   ProfileWishlistRoute: ProfileWishlistRoute,
-}
+  ProfileIndexRoute: ProfileIndexRoute,
+};
 
-const ProfileRouteWithChildren =
-  ProfileRoute._addFileChildren(ProfileRouteChildren)
+const ProfileRouteWithChildren = ProfileRoute._addFileChildren(ProfileRouteChildren);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/profile': typeof ProfileRouteWithChildren
-  '/profile/account': typeof ProfileAccountRoute
-  '/profile/orders': typeof ProfileOrdersRoute
-  '/profile/wishlist': typeof ProfileWishlistRoute
+  '/': typeof IndexRoute;
+  '/about': typeof AboutRoute;
+  '/cart': typeof CartRoute;
+  '/new-arrivals': typeof NewArrivalsRoute;
+  '/profile': typeof ProfileRouteWithChildren;
+  '/profile/account': typeof ProfileAccountRoute;
+  '/profile/orders': typeof ProfileOrdersRoute;
+  '/profile/wishlist': typeof ProfileWishlistRoute;
+  '/profile/': typeof ProfileIndexRoute;
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/profile': typeof ProfileRouteWithChildren
-  '/profile/account': typeof ProfileAccountRoute
-  '/profile/orders': typeof ProfileOrdersRoute
-  '/profile/wishlist': typeof ProfileWishlistRoute
+  '/': typeof IndexRoute;
+  '/about': typeof AboutRoute;
+  '/cart': typeof CartRoute;
+  '/new-arrivals': typeof NewArrivalsRoute;
+  '/profile/account': typeof ProfileAccountRoute;
+  '/profile/orders': typeof ProfileOrdersRoute;
+  '/profile/wishlist': typeof ProfileWishlistRoute;
+  '/profile': typeof ProfileIndexRoute;
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/profile': typeof ProfileRouteWithChildren
-  '/profile/account': typeof ProfileAccountRoute
-  '/profile/orders': typeof ProfileOrdersRoute
-  '/profile/wishlist': typeof ProfileWishlistRoute
+  __root__: typeof rootRoute;
+  '/': typeof IndexRoute;
+  '/about': typeof AboutRoute;
+  '/cart': typeof CartRoute;
+  '/new-arrivals': typeof NewArrivalsRoute;
+  '/profile': typeof ProfileRouteWithChildren;
+  '/profile/account': typeof ProfileAccountRoute;
+  '/profile/orders': typeof ProfileOrdersRoute;
+  '/profile/wishlist': typeof ProfileWishlistRoute;
+  '/profile/': typeof ProfileIndexRoute;
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
     | '/about'
+    | '/cart'
+    | '/new-arrivals'
     | '/profile'
     | '/profile/account'
     | '/profile/orders'
     | '/profile/wishlist'
-  fileRoutesByTo: FileRoutesByTo
+    | '/profile/';
+  fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
     | '/about'
-    | '/profile'
+    | '/cart'
+    | '/new-arrivals'
     | '/profile/account'
     | '/profile/orders'
     | '/profile/wishlist'
+    | '/profile';
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/cart'
+    | '/new-arrivals'
     | '/profile'
     | '/profile/account'
     | '/profile/orders'
     | '/profile/wishlist'
-  fileRoutesById: FileRoutesById
+    | '/profile/';
+  fileRoutesById: FileRoutesById;
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  ProfileRoute: typeof ProfileRouteWithChildren
+  IndexRoute: typeof IndexRoute;
+  AboutRoute: typeof AboutRoute;
+  CartRoute: typeof CartRoute;
+  NewArrivalsRoute: typeof NewArrivalsRoute;
+  ProfileRoute: typeof ProfileRouteWithChildren;
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CartRoute: CartRoute,
+  NewArrivalsRoute: NewArrivalsRoute,
   ProfileRoute: ProfileRouteWithChildren,
-}
+};
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
 /* ROUTE_MANIFEST_START
 {
@@ -202,6 +265,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/cart",
+        "/new-arrivals",
         "/profile"
       ]
     },
@@ -211,12 +276,19 @@ export const routeTree = rootRoute
     "/about": {
       "filePath": "about.tsx"
     },
+    "/cart": {
+      "filePath": "cart.tsx"
+    },
+    "/new-arrivals": {
+      "filePath": "new-arrivals.tsx"
+    },
     "/profile": {
       "filePath": "profile.tsx",
       "children": [
         "/profile/account",
         "/profile/orders",
-        "/profile/wishlist"
+        "/profile/wishlist",
+        "/profile/"
       ]
     },
     "/profile/account": {
@@ -229,6 +301,10 @@ export const routeTree = rootRoute
     },
     "/profile/wishlist": {
       "filePath": "profile/wishlist.tsx",
+      "parent": "/profile"
+    },
+    "/profile/": {
+      "filePath": "profile/index.tsx",
       "parent": "/profile"
     }
   }
