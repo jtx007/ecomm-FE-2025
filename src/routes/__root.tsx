@@ -13,7 +13,7 @@ import {
 import { cn } from '@/lib/utils';
 import React, { memo } from 'react';
 import { buttonVariants } from '@/components/ui/button';
-import { UserRound } from 'lucide-react';
+import { UserRound, ShoppingBag, Star } from 'lucide-react';
 
 const navItems: { title: string; href: string; description: string }[] = [
   {
@@ -67,9 +67,9 @@ const Navigation = memo(() => (
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+            <Link to="/new-arrivals" className={navigationMenuTriggerStyle()}>
               New Arrivals
-            </NavigationMenuLink>
+            </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
@@ -93,6 +93,12 @@ const Navigation = memo(() => (
       <div className="place-self-end">
         <Link to="/profile" className={cn(buttonVariants({ variant: 'link' }))}>
           <UserRound />
+        </Link>
+        <Link to="/profile/wishlist" className={cn(buttonVariants({ variant: 'link' }))}>
+          <Star />
+        </Link>
+        <Link to="/cart" className={cn(buttonVariants({ variant: 'link' }))}>
+          <ShoppingBag />
         </Link>
       </div>
     </div>

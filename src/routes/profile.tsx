@@ -6,8 +6,10 @@ export const Route = createFileRoute('/profile')({
 
 function ProfileLayoutComponent() {
   return (
-    <ProfileLayout>
-      <Outlet />
-    </ProfileLayout>
+    <>
+      <ProfileLayout>
+        <Outlet />
+      </ProfileLayout>
+    </>
   );
 }
