@@ -15,6 +15,8 @@ import React, { memo } from 'react';
 import { buttonVariants } from '@/components/ui/button';
 import { UserRound, ShoppingBag, Star } from 'lucide-react';
 import User from '@/types/user';
+import { ThemeProvider } from '@/components/ui/theme-provider';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const navItems: { title: string; href: string; description: string }[] = [
   {
@@ -91,7 +93,7 @@ const Navigation = memo(() => (
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <div className="place-self-end">
+      <div className="flex  place-self-end">
         <Link to="/profile" className={cn(buttonVariants({ variant: 'link' }))}>
           <UserRound />
         </Link>
@@ -101,6 +103,7 @@ const Navigation = memo(() => (
         <Link to="/cart" className={cn(buttonVariants({ variant: 'link' }))}>
           <ShoppingBag />
         </Link>
+        <ThemeToggle />
       </div>
     </div>
   </>
@@ -114,10 +117,12 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <>
-      <Navigation />
-      <hr />
-      <Outlet />
-      <TanStackRouterDevtools />
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <Navigation />
+        <hr />
+        <Outlet />
+        <TanStackRouterDevtools />
+      </ThemeProvider>
     </>
   ),
 });
