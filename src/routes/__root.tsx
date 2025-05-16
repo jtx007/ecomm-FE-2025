@@ -1,4 +1,6 @@
 import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router';
+import { ClerkProvider } from '@clerk/tanstack-react-start';
+
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import {
   NavigationMenu,
@@ -118,10 +120,12 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <Navigation />
-        <hr />
-        <Outlet />
-        <TanStackRouterDevtools />
+        <ClerkProvider>
+          <Navigation />
+          <hr />
+          <Outlet />
+          <TanStackRouterDevtools />
+        </ClerkProvider>
       </ThemeProvider>
     </>
   ),
