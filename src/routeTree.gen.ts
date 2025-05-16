@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root';
+import { Route as SignupImport } from './routes/signup';
 import { Route as ProfileImport } from './routes/profile';
 import { Route as NewArrivalsImport } from './routes/new-arrivals';
 import { Route as LoginImport } from './routes/login';
@@ -23,6 +24,12 @@ import { Route as ProfileOrdersImport } from './routes/profile/orders';
 import { Route as ProfileAccountImport } from './routes/profile/account';
 
 // Create/Update Routes
+
+const SignupRoute = SignupImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRoute,
+} as any);
 
 const ProfileRoute = ProfileImport.update({
   id: '/profile',
@@ -130,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileImport;
       parentRoute: typeof rootRoute;
     };
+    '/signup': {
+      id: '/signup';
+      path: '/signup';
+      fullPath: '/signup';
+      preLoaderRoute: typeof SignupImport;
+      parentRoute: typeof rootRoute;
+    };
     '/profile/account': {
       id: '/profile/account';
       path: '/account';
@@ -186,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute;
   '/new-arrivals': typeof NewArrivalsRoute;
   '/profile': typeof ProfileRouteWithChildren;
+  '/signup': typeof SignupRoute;
   '/profile/account': typeof ProfileAccountRoute;
   '/profile/orders': typeof ProfileOrdersRoute;
   '/profile/wishlist': typeof ProfileWishlistRoute;
@@ -198,6 +213,7 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute;
   '/login': typeof LoginRoute;
   '/new-arrivals': typeof NewArrivalsRoute;
+  '/signup': typeof SignupRoute;
   '/profile/account': typeof ProfileAccountRoute;
   '/profile/orders': typeof ProfileOrdersRoute;
   '/profile/wishlist': typeof ProfileWishlistRoute;
@@ -212,6 +228,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute;
   '/new-arrivals': typeof NewArrivalsRoute;
   '/profile': typeof ProfileRouteWithChildren;
+  '/signup': typeof SignupRoute;
   '/profile/account': typeof ProfileAccountRoute;
   '/profile/orders': typeof ProfileOrdersRoute;
   '/profile/wishlist': typeof ProfileWishlistRoute;
@@ -227,6 +244,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/new-arrivals'
     | '/profile'
+    | '/signup'
     | '/profile/account'
     | '/profile/orders'
     | '/profile/wishlist'
@@ -238,6 +256,7 @@ export interface FileRouteTypes {
     | '/cart'
     | '/login'
     | '/new-arrivals'
+    | '/signup'
     | '/profile/account'
     | '/profile/orders'
     | '/profile/wishlist'
@@ -250,6 +269,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/new-arrivals'
     | '/profile'
+    | '/signup'
     | '/profile/account'
     | '/profile/orders'
     | '/profile/wishlist'
@@ -264,6 +284,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute;
   NewArrivalsRoute: typeof NewArrivalsRoute;
   ProfileRoute: typeof ProfileRouteWithChildren;
+  SignupRoute: typeof SignupRoute;
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -273,6 +294,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   NewArrivalsRoute: NewArrivalsRoute,
   ProfileRoute: ProfileRouteWithChildren,
+  SignupRoute: SignupRoute,
 };
 
 export const routeTree = rootRoute
@@ -290,7 +312,8 @@ export const routeTree = rootRoute
         "/cart",
         "/login",
         "/new-arrivals",
-        "/profile"
+        "/profile",
+        "/signup"
       ]
     },
     "/": {
@@ -316,6 +339,9 @@ export const routeTree = rootRoute
         "/profile/wishlist",
         "/profile/"
       ]
+    },
+    "/signup": {
+      "filePath": "signup.tsx"
     },
     "/profile/account": {
       "filePath": "profile/account.tsx",
